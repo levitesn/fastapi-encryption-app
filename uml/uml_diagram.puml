@@ -1,0 +1,26 @@
+@startuml
+
+participant "Client" as Client
+participant "FastAPI App" as FastAPI
+participant "SyncMap" as Map
+participant "Fernet" as Cipher
+
+Client -> FastAPI: POST /encrypt
+activate FastAPI
+FastAPI -> Cipher: generate_key()
+FastAPI -> Cipher: encrypt(data)
+FastAPI -> Map: set(sha256(encrypted_data), key)
+FastAPI -> Client: return encrypted_data
+deactivate FastAPI
+
+Client -> FastAPI: POST /decrypt
+activate FastAPI
+FastAPI -> Map: get(sha256(encrypted_data))
+alt [key found]
+    FastAPI -> Cipher: decrypt(encrypted_data)
+    FastAPI -> Client: return decrypted_data
+else [key not found]
+    FastAPI -> Client: HTTP 404 Not Found
+end
+deactivate FastAPI
+@enduml

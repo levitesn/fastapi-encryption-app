@@ -76,6 +76,52 @@ Decrypts the input data.
 
 The OpenAPI specification for this application is provided in the `openapi.yaml` file. You can view the auto-generated API documentation by visiting `http://localhost:8001/docs` when the application is running.
 
+## Example Calls in Python
+
+You can use the `requests` library in Python to interact with the `/encrypt` and `/decrypt` endpoints of this FastAPI application.
+
+First, ensure you have the `requests` library installed. You can install it using:
+
+```bash
+pip install requests
+````
+
+Here are some example calls to the endpoints:
+
+```python
+import requests
+
+# Define the data to be encrypted
+data_to_encrypt = b"Test data for encryption"
+
+# Send a POST request to the /encrypt endpoint
+response = requests.post("http://localhost:8001/encrypt", data=data_to_encrypt)
+
+# Check if the request was successful
+if response.status_code == 200:
+    encrypted_data = response.json()["encrypted_data"]
+    print(f"Encrypted Data: {encrypted_data}")
+else:
+    print(f"Failed to encrypt data: {response.status_code} - {response.text}")
+```
+
+ ```python
+import requests
+
+# Assume we have the encrypted data from the previous step
+encrypted_data = "..."  # Replace with the actual encrypted data
+
+# Send a POST request to the /decrypt endpoint
+response = requests.post("http://localhost:8001/decrypt", json={"encrypted_data": encrypted_data})
+
+# Check if the request was successful
+if response.status_code == 200:
+    decrypted_data = response.json()["decrypted_data"]
+    print(f"Decrypted Data: {decrypted_data}")
+else:
+    print(f"Failed to decrypt data: {response.status_code} - {response.text}")
+```
+
 ## Running Tests
 
 To run the tests, you need to have `pytest` installed. You can install it using:
