@@ -16,7 +16,7 @@ This is a FastAPI application that provides endpoints for encrypting and decrypt
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/your-username/fastapi-encryption-app.git
+    git clone https://github.com/levitesn/fastapi-encryption-app
     cd fastapi-encryption-app
     ```
 
@@ -36,7 +36,7 @@ The application will be accessible at `http://localhost:8001`.
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/your-username/fastapi-encryption-app.git
+    git clone https://github.com/levitesn/fastapi-encryption-app
     cd fastapi-encryption-app
     ```
 
