@@ -122,6 +122,9 @@ else:
     print(f"Failed to decrypt data: {response.status_code} - {response.text}")
 ```
 
+## UML Diagram
+![uml diagram](./uml/uml_diagram.png)
+
 ## Running Tests
 
 To run the tests, you need to have `pytest` installed. You can install it using:
