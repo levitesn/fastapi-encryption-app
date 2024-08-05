@@ -1,0 +1,76 @@
+openapi: 3.0.0
+info:
+  title: Encryption Service API
+  version: 1.0.0
+  description: API for encrypting and decrypting data
+paths:
+  /encrypt:
+    post:
+      summary: Encrypt data
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Successfully encrypted data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  encrypted_data:
+                    type: string
+        '400':
+          description: Empty request body
+
+  /decrypt:
+    post:
+      summary: Decrypt data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                encrypted_data:
+                  type: string
+                  description: The encrypted data to be decrypted
+      responses:
+        '200':
+          description: Successfully decrypted data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  decrypted_data:
+                    type: string
+        '400':
+          description: Missing or empty encrypted_data field
+        '404':
+          description: Encrypted data not found
+components:
+  schemas:
+    EncryptRequest:
+      type: string
+      format: binary
+    DecryptRequest:
+      type: object
+      properties:
+        encrypted_data:
+          type: string
+    EncryptResponse:
+      type: object
+      properties:
+        encrypted_data:
+          type: string
+    DecryptResponse:
+      type: object
+      properties:
+        decrypted_data:
+          type: string
