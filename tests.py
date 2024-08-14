@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 from app import app
+import base64
 
 client = TestClient(app)
 
@@ -23,11 +24,14 @@ def test_encrypt_decrypt():
 
 
 def test_encrypt_decrypt_file():
-    # read requirements file and encrypt it
-    original_data = open("requirements.txt", "rb").read()
+    # read test file as bytes and encrypt it
+    original_data = open("wiki.pdf", "rb").read()
+
+    # base64 encode the data
+    encoded_data = base64.b64encode(original_data)
 
     # Encrypt the data
-    response = client.post("/encrypt", data=original_data)
+    response = client.post("/encrypt", data=encoded_data)
     assert response.status_code == 200
     encrypted_data = response.json()["encrypted_data"]
 
@@ -37,7 +41,7 @@ def test_encrypt_decrypt_file():
     decrypted_data = response.json()["decrypted_data"]
 
     # Verify the decrypted data matches the original data
-    assert decrypted_data == original_data.decode("utf-8")
+    assert decrypted_data == encoded_data.decode("utf-8")
 
 
 def test_decrypt_never_seen():
