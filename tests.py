@@ -22,6 +22,24 @@ def test_encrypt_decrypt():
     assert decrypted_data == original_data.decode("utf-8")
 
 
+def test_encrypt_decrypt_file():
+    # read requirements file and encrypt it
+    original_data = open("requirements.txt", "rb").read()
+
+    # Encrypt the data
+    response = client.post("/encrypt", data=original_data)
+    assert response.status_code == 200
+    encrypted_data = response.json()["encrypted_data"]
+
+    # Decrypt the data
+    response = client.post("/decrypt", json={"encrypted_data": encrypted_data})
+    assert response.status_code == 200
+    decrypted_data = response.json()["decrypted_data"]
+
+    # Verify the decrypted data matches the original data
+    assert decrypted_data == original_data.decode("utf-8")
+
+
 def test_decrypt_never_seen():
     # Attempt to decrypt with invalid data
     response = client.post("/decrypt", json={"encrypted_data": "new_data"})
